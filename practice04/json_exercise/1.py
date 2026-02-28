@@ -1,15 +1,19 @@
 import json
 
-# Открываем JSON файл
 with open("sample-data.json", "r") as file:
     data = json.load(file)
 
 print("Interface Status")
-print("=" * 30)
-print("DN")
-print("-" * 30)
+print("=" * 80)
+print(f"{'DN':<50} {'Description':<20} {'Speed':<8} {'MTU':<6}")
+print("-" * 80)
 
-# Предполагаемая структура (как обычно в этих заданиях Cisco APIC)
 for item in data["imdata"]:
-    dn = item["l1PhysIf"]["attributes"]["dn"]
-    print(dn)
+    attributes = item["l1PhysIf"]["attributes"]
+
+    dn = attributes.get("dn", "")
+    descr = attributes.get("descr", "")
+    speed = attributes.get("speed", "")
+    mtu = attributes.get("mtu", "")
+
+    print(f"{dn:<50} {descr:<20} {speed:<8} {mtu:<6}")
